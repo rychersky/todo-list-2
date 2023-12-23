@@ -1,5 +1,5 @@
 import { getProjects } from '../data/projects';
-import { deleteProject } from '../data/projects';
+import { openProjectCloseModal } from './modals';
 
 export function updateProjectsList() {
   const menu = document.querySelector('.projects-menu ul');
@@ -30,7 +30,7 @@ export function updateProjectsList() {
         deleteButton.addEventListener('click', (event) => {
           event.stopPropagation();
           const projectName = node.querySelector('.project').innerText;
-          deleteProject(projectName);
+          openProjectCloseModal(projectName);
           updateProjectsList();
         });
         deleteButton.addEventListener('mouseenter', () => {

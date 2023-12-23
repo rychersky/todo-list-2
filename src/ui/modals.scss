@@ -1,3 +1,5 @@
+@import '../main.scss';
+
 .modal-container {
   position: fixed;
   top: 0;
@@ -14,17 +16,20 @@
   justify-content: center;
 }
 
-.project-modal {
+.modal {
   width: 500px;
   background-color: var(--bg-modal);
   z-index: 2;
   padding: 2rem 1rem;
   border-radius: 20px;
+  bottom: 10%;
+  position: relative;
+}
+
+.project-modal {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  bottom: 180px;
 
   h2 {
     font-size: 3rem;
@@ -57,5 +62,56 @@
   button:not(:disabled):hover {
     cursor: pointer;
     background: var(--bg-light-1);
+  }
+}
+
+.project-close-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    font-size: 2.5rem;
+    color: var(--text-dark);
+    text-align: center;
+
+    span {
+      color: var(--bg-light-2);
+    }
+  }
+
+  ul {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    list-style-type: none;
+
+    button {
+      width: 140px;
+      font-size: 2rem;
+      margin-top: 30px;
+      border: none;
+      padding: 1rem;
+      border-radius: 20px;
+      color: var(--text-light);
+    }
+
+    .project-close-modal--yes {
+      background: rgb(150, 150, 150);
+    }
+
+    .project-close-modal--yes:hover {
+      background: rgb(120, 120, 120);
+      cursor: pointer;
+    }
+
+    .project-close-modal--no {
+      background: var(--bg-light-3);
+    }
+
+    .project-close-modal--no:hover {
+      background: var(--bg-light-2);
+      cursor: pointer;
+    }
   }
 }
