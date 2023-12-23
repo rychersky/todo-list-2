@@ -1,0 +1,87 @@
+.todos {
+  list-style-type: none;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+
+  ul {
+    width: 100%;
+
+    li {
+      background-color: var(--bg-light-4);
+      border-radius: 20px;
+      padding: 0.4rem 0.8rem 0.4rem 0.4rem;
+      display: grid;
+      grid-template-columns: 50px 1fr 100px;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas:
+        'check-button title date'
+        'check-button desc  desc';
+      align-items: center;
+      color: var(--text-light);
+      box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+
+      &:not(:first-child) {
+        margin-top: 16px;
+      }
+
+      button {
+        grid-area: check-button;
+        box-shadow: none;
+        border-radius: 50%;
+        border: 2px solid var(--bg-dark-2);
+        background: var(--bg-light-4);
+        width: 2rem;
+        height: 2rem;
+        margin-right: 2px;
+        place-self: center;
+        cursor: pointer;
+
+        span {
+          transition: all 0.2s;
+          opacity: 0;
+        }
+
+        &:hover span {
+          transition: all 0.4s;
+          opacity: 1;
+        }
+      }
+
+      .todo-title {
+        grid-area: title;
+        font-size: 1.8rem;
+      }
+
+      .todo-date {
+        grid-area: date;
+        font-size: 0.8rem;
+        align-self: center;
+        justify-self: end;
+      }
+
+      .todo-description {
+        grid-area: desc;
+      }
+    }
+  }
+
+  .create-todo {
+    font-size: 36px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--bg-light-2);
+    align-self: flex-end;
+    color: var(--text-light);
+    margin-top: 16px;
+    cursor: pointer;
+  }
+
+  .create-todo:hover {
+    background: var(--bg-light-1);
+  }
+}

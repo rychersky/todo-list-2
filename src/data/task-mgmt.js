@@ -1,5 +1,14 @@
 import { getLS, setLS } from './local-storage';
-import { Task } from './task';
+
+class Task {
+  description;
+  dueDate;
+  project;
+
+  constructor(title) {
+    this.title = title;
+  }
+}
 
 export function addTask(title, description, dueDate, project) {
   if (!title) {
@@ -44,9 +53,9 @@ export function editTask(title, newTitle, description, dueDate, project) {
     console.log(`Cannot update task, does not exist: [${title}]`);
     return false;
   }
-  const newTitleDoesAlreadyExist =
+  const newTitleAlreadyExists =
     title !== newTitle && ls.tasks.some((task) => task.title === newTitle);
-  if (newTitleDoesAlreadyExist) {
+  if (newTitleAlreadyExists) {
     console.log(
       `Cannot update task [${title}], new title already exists: [${newTitle}]`
     );
@@ -62,29 +71,11 @@ export function editTask(title, newTitle, description, dueDate, project) {
   return true;
 }
 
-export function readTask(title) {
-  if (!title) {
-    return false;
-  }
+export function getTodos(projectName) {
   const ls = getLS();
-  const taskDoesNotExist = !ls.tasks.some((task) => task.title === title);
-  if (taskDoesNotExist) {
-    console.log(`Cannot update task, does not exist: ${title}`);
-    return false;
+  if (projectName) {
+    const filtered = ls.tasks.filter((task) => task.project === projectName);
+    return filtered;
   }
-  const task = ls.tasks.filter((t) => t.title === title)[0];
-  return task;
+  return ls.tasks;
 }
-
-// addTask('test1', 'no project', undefined, undefined, 'project1');
-// editTask(
-//   'test2',
-//   'test2',
-//   'yea yea yea',
-//   undefined,
-//   undefined,
-//   'a test project'
-// );
-// deleteTask('test1');
-// console.log('readTask:', readTask('test2'));
-// console.log(JSON.parse(localStorage.getItem('todo-list-2')));

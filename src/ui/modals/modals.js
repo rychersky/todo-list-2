@@ -1,6 +1,6 @@
 import './modals.scss';
-import { createProject, deleteProject } from '../data/projects';
-import { updateProjectsList } from './misc';
+import { createProject, deleteProject } from '../../data/project-mgmt';
+import { updateProjectsList } from '../projects/projects';
 
 export function openProjectModal() {
   document.activeElement.blur();

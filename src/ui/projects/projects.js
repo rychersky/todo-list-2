@@ -1,5 +1,6 @@
-import { getProjects } from '../data/projects';
-import { openProjectCloseModal } from './modals';
+import './projects.scss';
+import { getProjects } from '../../data/project-mgmt';
+import { openProjectCloseModal } from '../modals/modals';
 
 export function updateProjectsList() {
   const menu = document.querySelector('.projects-menu ul');
