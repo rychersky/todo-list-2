@@ -21,7 +21,7 @@ export function updateProjectsList() {
   const allProjects = menu.querySelectorAll('li');
   allProjects.forEach((node) => {
     node.addEventListener('click', (e) => {
-      // TODO: filter task list
+      // TODO: filter todo list
       console.log(`Clicked [${e.target.innerText}] button`);
     });
 

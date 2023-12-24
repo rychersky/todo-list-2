@@ -4,8 +4,9 @@ import {
   deleteProject,
   getProjects,
 } from '../../data/project-mgmt';
-import { editTask, readTodo } from '../../data/task-mgmt';
+import { editTodo, readTodo } from '../../data/todo-mgmt';
 import { updateProjectsList } from '../projects/projects';
+import { updateTodosList } from '../todos/todos';
 
 const body = document.querySelector('body');
 
@@ -78,8 +79,11 @@ export function openTodoEditModal(title) {
   const todoOriginal = readTodo(title);
   modal.innerHTML = /* html */ `
     <h2>Edit Todo</h2>
-    <label for="todo-title">Title:</label>
-    <input id="todo-title" type="text" value="${todoOriginal.title}" />
+    <div class="todo-title-container">
+      <label for="todo-title">Title:</label>
+      <input id="todo-title" type="text" value="${todoOriginal.title}" />
+      <p>Please enter a title for your todo.</p>
+    </div>
 
     <label for="todo-description">Description:</label>
     <input id="todo-description" type="text" value="${
@@ -100,6 +104,7 @@ export function openTodoEditModal(title) {
     </div>
   `;
   const titleField = modal.querySelector('#todo-title');
+  const titleFieldWarning = modal.querySelector('p');
   const descriptionField = modal.querySelector('#todo-description');
   const dateField = modal.querySelector('#todo-date');
   const projectField = modal.querySelector('#todo-project');
@@ -113,8 +118,39 @@ export function openTodoEditModal(title) {
     option.innerHTML = p;
     projectField.appendChild(option);
   });
+  projectField.value = todoOriginal.project || '';
 
-  submitButton.addEventListener('click', () => {});
+  titleField.addEventListener('input', (e) => {
+    if (e.target.value) {
+      submitButton.disabled = false;
+      submitButton.classList.remove('disabled');
+      titleField.classList.remove('title-required');
+      titleFieldWarning.classList.remove('show-warning');
+    } else {
+      submitButton.disabled = true;
+    }
+  });
+
+  titleField.addEventListener('change', (e) => {
+    if (!e.target.value) {
+      titleField.classList.add('title-required');
+      titleFieldWarning.classList.add('show-warning');
+    }
+  });
+
+  submitButton.addEventListener('click', () => {
+    editTodo(
+      title,
+      titleField.value,
+      descriptionField.value,
+      dateField.value,
+      projectField.value
+    );
+    closeModal();
+    updateTodosList();
+  });
+
+  cancelButton.addEventListener('click', closeModal);
 
   document.querySelector('body').appendChild(container);
   titleField.focus();

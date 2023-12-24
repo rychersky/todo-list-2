@@ -1,5 +1,5 @@
-import './tasks.scss';
-import { getTodos } from '../../data/task-mgmt';
+import './todos.scss';
+import { getTodos } from '../../data/todo-mgmt';
 import { openTodoEditModal } from '../modals/modals';
 
 export function updateTodosList(projectName) {

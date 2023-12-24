@@ -55,6 +55,7 @@
 
   button:disabled {
     background: var(--bg-button-secondary);
+    cursor: not-allowed;
   }
 
   button:not(:disabled):hover {
@@ -96,11 +97,11 @@
     }
 
     .project-close-modal--yes {
-      background: rgb(150, 150, 150);
+      background: var(--bg-button-secondary);
     }
 
     .project-close-modal--yes:hover {
-      background: rgb(120, 120, 120);
+      background: var(--bg-button-secondary-hover);
     }
 
     .project-close-modal--no {
@@ -138,6 +139,29 @@
     width: 500px;
   }
 
+  .todo-title-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  p {
+    color: red;
+    font-size: 0.8rem;
+    position: absolute;
+    top: 5.5rem;
+    align-self: end;
+    display: none;
+  }
+
+  .show-warning {
+    display: initial;
+  }
+
+  .title-required {
+    outline: 2px solid red;
+  }
+
   .edit-buttons {
     display: flex;
     justify-content: space-evenly;
@@ -152,11 +176,20 @@
       border-radius: 20px;
     }
 
+    .edit-submit:disabled {
+      background: var(--bg-button-secondary);
+      cursor: not-allowed;
+    }
+
+    .edit-submit:disabled:hover {
+      background-color: var(--bg-button-secondary);
+    }
+
     .edit-submit {
       background: var(--bg-button-primary);
     }
 
-    .edit-submit:hover {
+    .edit-submit:not(disabled):hover {
       background: var(--bg-button-primary-hover);
     }
 

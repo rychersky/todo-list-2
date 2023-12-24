@@ -1,6 +1,6 @@
 export function getLS() {
   if (!JSON.parse(localStorage.getItem('todo-list-2'))) {
-    setLS({ tasks: [], projects: [] });
+    setLS({ todos: sampleTodos, projects: ['Sample Project'] });
   }
   return JSON.parse(localStorage.getItem('todo-list-2'));
 }
@@ -8,3 +8,14 @@ export function getLS() {
 export function setLS(obj) {
   localStorage.setItem('todo-list-2', JSON.stringify(obj));
 }
+
+const sampleTodos = [
+  {
+    title: 'Sample Todo',
+    description: 'A sample todo to demonstrate the UI',
+  },
+  {
+    title: 'Feed the dog',
+    project: 'Sample Project',
+  },
+];

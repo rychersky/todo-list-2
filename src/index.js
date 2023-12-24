@@ -1,7 +1,7 @@
 import './main.scss';
 import { openProjectModal, openTodoEditModal } from './ui/modals/modals';
 import { updateProjectsList } from './ui/projects/projects';
-import { updateTodosList } from './ui/tasks/tasks';
+import { updateTodosList } from './ui/todos/todos';
 
 document
   .querySelector('.create-project')
@@ -9,4 +9,4 @@ document
 
 updateProjectsList();
 updateTodosList();
-openTodoEditModal('test2');
+openTodoEditModal('Sample Todo');

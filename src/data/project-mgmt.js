@@ -18,9 +18,9 @@ export function deleteProject(name) {
     return project !== name;
   });
   ls.projects = filtered;
-  ls.tasks.forEach((task) => {
-    if (task.project === name) {
-      task.project = '';
+  ls.todos.forEach((todo) => {
+    if (todo.project === name) {
+      todo.project = '';
     }
   });
   setLS(ls);
