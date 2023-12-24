@@ -62,13 +62,19 @@ export function editTask(title, newTitle, description, dueDate, project) {
     return false;
   }
   const task = ls.tasks[ls.tasks.findIndex((task) => task.title === title)];
-  task.title = newTitle ? newTitle : title;
+  task.title = newTitle || title;
   task.description = description;
   task.dueDate = dueDate;
   task.project = project;
   setLS(ls);
   console.log(`Updated task: [${title}]`);
   return true;
+}
+
+export function readTodo(title) {
+  const ls = getLS();
+  const task = ls.tasks[ls.tasks.findIndex((task) => task.title === title)];
+  return task;
 }
 
 export function getTodos(projectName) {

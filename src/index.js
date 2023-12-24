@@ -1,5 +1,5 @@
 import './main.scss';
-import { openProjectModal } from './ui/modals/modals';
+import { openProjectModal, openTodoEditModal } from './ui/modals/modals';
 import { updateProjectsList } from './ui/projects/projects';
 import { updateTodosList } from './ui/tasks/tasks';
 
@@ -9,3 +9,4 @@ document
 
 updateProjectsList();
 updateTodosList();
+openTodoEditModal('test2');
