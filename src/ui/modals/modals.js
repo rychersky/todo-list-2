@@ -4,7 +4,7 @@ import {
   deleteProject,
   getProjects,
 } from '../../data/project-mgmt';
-import { editTodo, readTodo } from '../../data/todo-mgmt';
+import { addTodo, editTodo, readTodo } from '../../data/todo-mgmt';
 import { updateProjectsList } from '../projects/projects';
 import { updateTodosList } from '../todos/todos';
 
@@ -157,6 +157,105 @@ export function openTodoEditModal(title) {
   const value = titleField.value;
   titleField.value = '';
   titleField.value = value;
+}
+
+export function openTodoAddModal() {
+  const container = baseModal('todo-add-modal');
+  const modal = container.firstElementChild;
+  modal.innerHTML = /* html */ `
+    <h2>Add Todo</h2>
+    <div class="todo-title-container">
+      <label for="todo-title">Title:</label>
+      <input id="todo-title" type="text" />
+      <p class="title-empty">Please enter a title for your todo.</p>
+      <p class="title-already-taken">A todo with this title already exists.</p>
+    </div>
+
+    <label for="todo-description">Description:</label>
+    <input id="todo-description" type="text" />
+
+    <label for="todo-date">Due Date:</label>
+    <input id="todo-date" type="date" />
+
+    <label for="todo-project">Project:</label>
+    <select id="todo-project">
+      <option value="">None</option>
+    </select>
+
+    <div class="edit-buttons">
+      <button type="button" class="edit-submit disabled-btn">Submit</button>
+      <button type="button" class="edit-cancel">Cancel</button>
+    </div>
+  `;
+  const titleField = modal.querySelector('#todo-title');
+  const titleEmptyWarning = modal.querySelector('.title-empty');
+  const titleMissingWarning = modal.querySelector('.title-already-taken');
+  const descriptionField = modal.querySelector('#todo-description');
+  const dateField = modal.querySelector('#todo-date');
+  const projectField = modal.querySelector('#todo-project');
+  const submitButton = modal.querySelector('.edit-submit');
+  const cancelButton = modal.querySelector('.edit-cancel');
+
+  const projects = getProjects();
+  projects.forEach((p) => {
+    const option = document.createElement('option');
+    option.value = p;
+    option.innerHTML = p;
+    projectField.appendChild(option);
+  });
+
+  titleField.addEventListener('input', (e) => {
+    if (e.target.value) {
+      submitButton.disabled = false;
+      submitButton.classList.remove('disabled-btn');
+      titleField.classList.remove('title-required');
+      titleEmptyWarning.classList.remove('show-warning');
+    } else {
+      submitButton.disabled = true;
+    }
+  });
+
+  titleField.addEventListener('change', (e) => {
+    if (!e.target.value) {
+      titleField.classList.add('title-required');
+      titleEmptyWarning.classList.add('show-warning');
+    }
+  });
+
+  function addTodoEnterKeyPress(e) {
+    if (e.key === 'Enter') {
+      submitButtonClick();
+    }
+  }
+
+  function submitButtonClick() {
+    const todoNameAlreadyTaken = !!readTodo(titleField.value);
+
+    if (!titleField.value) {
+      titleField.classList.add('title-required');
+      titleEmptyWarning.classList.add('show-warning');
+    } else if (todoNameAlreadyTaken) {
+      titleField.classList.add('title-required');
+      titleMissingWarning.classList.add('show-warning');
+    } else {
+      addTodo(
+        titleField.value,
+        descriptionField.value,
+        dateField.value,
+        projectField.value
+      );
+      closeModal();
+      document.removeEventListener('keydown', addTodoEnterKeyPress);
+      updateTodosList();
+    }
+  }
+
+  submitButton.addEventListener('click', submitButtonClick);
+  cancelButton.addEventListener('click', closeModal);
+  document.addEventListener('keydown', addTodoEnterKeyPress);
+
+  body.appendChild(container);
+  titleField.focus();
 }
 
 function baseModal(modalClassName) {

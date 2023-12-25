@@ -71,9 +71,14 @@ export function readTodo(title) {
 
 export function getTodos(projectName) {
   const ls = getLS();
-  if (projectName) {
+  if (projectName === 'Inbox' || !projectName) {
+    return ls.todos;
+  } else if (projectName === 'Today') {
+    const today = new Date().toISOString().split('T')[0];
+    const filtered = ls.todos.filter((todo) => todo.dueDate === today);
+    return filtered;
+  } else if (projectName) {
     const filtered = ls.todos.filter((todo) => todo.project === projectName);
     return filtered;
   }
-  return ls.todos;
 }

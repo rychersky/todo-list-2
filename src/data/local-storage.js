@@ -13,6 +13,7 @@ const sampleTodos = [
   {
     title: 'Sample Todo',
     description: 'A sample todo to demonstrate the UI',
+    dueDate: '2023-12-25',
   },
   {
     title: 'Feed the dog',

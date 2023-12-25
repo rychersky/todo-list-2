@@ -1,6 +1,7 @@
 import './projects.scss';
 import { getProjects } from '../../data/project-mgmt';
 import { openProjectCloseModal } from '../modals/modals';
+import { updateTodosList } from '../todos/todos';
 
 export function updateProjectsList() {
   const menu = document.querySelector('.projects-menu ul');
@@ -21,14 +22,16 @@ export function updateProjectsList() {
   const allProjects = menu.querySelectorAll('li');
   allProjects.forEach((node) => {
     node.addEventListener('click', (e) => {
-      // TODO: filter todo list
-      console.log(`Clicked [${e.target.innerText}] button`);
+      const projectName = e.target.innerHTML;
+      document.querySelector('h1').innerHTML = projectName;
+      updateTodosList();
     });
 
     node.addEventListener('mouseenter', (e) => {
       if (!['Inbox', 'Today'].includes(e.target.firstElementChild.innerText)) {
         const deleteButton = document.createElement('button');
         deleteButton.addEventListener('click', (event) => {
+          console.log(e.target);
           event.stopPropagation();
           const projectName = node.querySelector('.project').innerText;
           openProjectCloseModal(projectName);

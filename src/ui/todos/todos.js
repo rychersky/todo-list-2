@@ -1,11 +1,12 @@
 import './todos.scss';
-import { getTodos } from '../../data/todo-mgmt';
+import { deleteTodo, getTodos } from '../../data/todo-mgmt';
 import { openTodoEditModal } from '../modals/modals';
 
-export function updateTodosList(projectName) {
+export function updateTodosList() {
   const list = document.querySelector('.todos ul');
   list.innerHTML = '';
 
+  const projectName = document.querySelector('h1').innerHTML;
   const todos = getTodos(projectName);
   todos.forEach((todo) => {
     const li = document.createElement('li');
@@ -30,6 +31,20 @@ export function updateTodosList(projectName) {
       const projectName = li.querySelector('.todo-title').innerHTML;
       openTodoEditModal(projectName);
     });
+
+    const closeButton = li.querySelector('button');
+    li.addEventListener('mouseenter', () => {
+      closeButton.classList.add('mouseover-bg');
+    });
+    li.addEventListener('mouseleave', () => {
+      closeButton.classList.remove('mouseover-bg');
+    });
+    closeButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      deleteTodo(todo.title);
+      updateTodosList();
+    });
+
     list.appendChild(li);
   });
 }

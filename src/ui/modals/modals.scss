@@ -114,7 +114,8 @@
   }
 }
 
-.todo-edit-modal {
+.todo-edit-modal,
+.todo-add-modal {
   display: flex;
   flex-direction: column;
   color: var(--text-dark);
@@ -127,6 +128,14 @@
   label {
     font-size: 1.5rem;
     margin-top: 1rem;
+  }
+
+  label[for='todo-title']::before {
+    content: '*';
+    position: absolute;
+    left: -15px;
+    top: 21px;
+    color: red;
   }
 
   input,
@@ -176,12 +185,14 @@
       border-radius: 20px;
     }
 
-    .edit-submit:disabled {
+    .edit-submit:disabled,
+    .edit-submit.disabled-btn {
       background: var(--bg-button-secondary);
       cursor: not-allowed;
     }
 
-    .edit-submit:disabled:hover {
+    .edit-submit:disabled:hover,
+    .edit-submit.disabled-btn:hover {
       background-color: var(--bg-button-secondary);
     }
 

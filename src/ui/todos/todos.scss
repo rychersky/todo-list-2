@@ -27,6 +27,14 @@
         margin-top: 16px;
       }
 
+      &:active:not(:focus-within) {
+        transform: translateY(1px);
+      }
+
+      &:hover {
+        background-color: var(--bg-light-3);
+      }
+
       button {
         grid-area: check-button;
         box-shadow: none;
@@ -47,6 +55,14 @@
         &:hover span {
           transition: all 0.4s;
           opacity: 1;
+        }
+
+        &:active {
+          transform: none;
+        }
+
+        &.mouseover-bg {
+          background: var(--bg-light-3);
         }
       }
 
