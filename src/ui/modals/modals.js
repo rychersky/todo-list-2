@@ -30,6 +30,7 @@ export function openProjectModal() {
   function createButtonClick() {
     createProject(inputField.value);
     closeModal();
+    document.removeEventListener('keydown', enterKeyPress);
     updateProjectsList();
   }
 
@@ -63,7 +64,8 @@ export function openProjectCloseModal(projectName) {
   yes.addEventListener('click', () => {
     deleteProject(projectName);
     closeModal();
-    updateProjectsList();
+    document.querySelector('h1').innerHTML = 'Inbox';
+    updateProjectsList('Inbox');
   });
 
   no.addEventListener('click', () => {
@@ -82,7 +84,8 @@ export function openTodoEditModal(title) {
     <div class="todo-title-container">
       <label for="todo-title">Title:</label>
       <input id="todo-title" type="text" value="${todoOriginal.title}" />
-      <p>Please enter a title for your todo.</p>
+      <p class="title-empty">Please enter a title for your todo.</p>
+      <p class="title-already-taken">A todo with this title already exists.</p>
     </div>
 
     <label for="todo-description">Description:</label>
@@ -104,7 +107,8 @@ export function openTodoEditModal(title) {
     </div>
   `;
   const titleField = modal.querySelector('#todo-title');
-  const titleFieldWarning = modal.querySelector('p');
+  const titleEmptyWarning = modal.querySelector('.title-empty');
+  const titleMissingWarning = modal.querySelector('.title-already-taken');
   const descriptionField = modal.querySelector('#todo-description');
   const dateField = modal.querySelector('#todo-date');
   const projectField = modal.querySelector('#todo-project');
@@ -125,7 +129,7 @@ export function openTodoEditModal(title) {
       submitButton.disabled = false;
       submitButton.classList.remove('disabled');
       titleField.classList.remove('title-required');
-      titleFieldWarning.classList.remove('show-warning');
+      titleEmptyWarning.classList.remove('show-warning');
     } else {
       submitButton.disabled = true;
     }
@@ -134,23 +138,39 @@ export function openTodoEditModal(title) {
   titleField.addEventListener('change', (e) => {
     if (!e.target.value) {
       titleField.classList.add('title-required');
-      titleFieldWarning.classList.add('show-warning');
+      titleEmptyWarning.classList.add('show-warning');
     }
   });
 
-  submitButton.addEventListener('click', () => {
-    editTodo(
-      title,
-      titleField.value,
-      descriptionField.value,
-      dateField.value,
-      projectField.value
-    );
-    closeModal();
-    updateTodosList();
-  });
+  function addTodoEnterKeyPress(e) {
+    if (e.key === 'Enter') {
+      submitButtonClick();
+    }
+  }
 
+  function submitButtonClick() {
+    const nameHasChanged = todoOriginal.title !== titleField.value;
+    const newNameAlreadyTaken = !!readTodo(titleField.value);
+
+    if (nameHasChanged && newNameAlreadyTaken) {
+      titleField.classList.add('title-required');
+      titleMissingWarning.classList.add('show-warning');
+    } else {
+      editTodo(
+        title,
+        titleField.value,
+        descriptionField.value,
+        dateField.value,
+        projectField.value
+      );
+      closeModal();
+      document.removeEventListener('keydown', addTodoEnterKeyPress);
+      updateTodosList();
+    }
+  }
+  submitButton.addEventListener('click', submitButtonClick);
   cancelButton.addEventListener('click', closeModal);
+  document.addEventListener('keydown', addTodoEnterKeyPress);
 
   document.querySelector('body').appendChild(container);
   titleField.focus();

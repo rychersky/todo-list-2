@@ -74,7 +74,8 @@ export function getTodos(projectName) {
   if (projectName === 'Inbox' || !projectName) {
     return ls.todos;
   } else if (projectName === 'Today') {
-    const today = new Date().toISOString().split('T')[0];
+    const [month, day, year] = new Date().toLocaleDateString().split('/');
+    const today = `${year}-${month}-${day}`;
     const filtered = ls.todos.filter((todo) => todo.dueDate === today);
     return filtered;
   } else if (projectName) {

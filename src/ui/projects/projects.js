@@ -24,18 +24,18 @@ export function updateProjectsList() {
     node.addEventListener('click', (e) => {
       const projectName = e.target.innerHTML;
       document.querySelector('h1').innerHTML = projectName;
-      updateTodosList();
+      updateTodosList(projectName);
     });
 
     node.addEventListener('mouseenter', (e) => {
       if (!['Inbox', 'Today'].includes(e.target.firstElementChild.innerText)) {
         const deleteButton = document.createElement('button');
         deleteButton.addEventListener('click', (event) => {
-          console.log(e.target);
           event.stopPropagation();
           const projectName = node.querySelector('.project').innerText;
           openProjectCloseModal(projectName);
           updateProjectsList();
+          updateTodosList('Inbox');
         });
         deleteButton.addEventListener('mouseenter', () => {
           node.querySelector('.project').classList.add('maintain-bg');

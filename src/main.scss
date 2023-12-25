@@ -9,8 +9,8 @@
 
 body {
   background-color: var(--bg-dark-1);
-  --bg-dark-1: rgb(25, 25, 25);
-  --bg-dark-2: rgb(30, 30, 30);
+  --bg-dark-1: rgb(30, 30, 30);
+  --bg-dark-2: rgb(35, 35, 35);
   --bg-light-1: rgb(53, 25, 212);
   --bg-light-2: rgb(70, 44, 216);
   --bg-light-3: rgb(89, 66, 220);
@@ -31,6 +31,8 @@ main {
   width: 800px;
   margin: 0 auto;
   display: grid;
+  box-shadow: -5px 0px 5px 0px rgba(2, 2, 2, 0.2),
+    5px 0px 5px 0px rgba(2, 2, 2, 0.2);
   grid-template-columns: 200px 1fr;
   grid-template-rows: 120px 1fr;
   grid-template-areas:

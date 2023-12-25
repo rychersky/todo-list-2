@@ -2,11 +2,10 @@ import './todos.scss';
 import { deleteTodo, getTodos } from '../../data/todo-mgmt';
 import { openTodoEditModal } from '../modals/modals';
 
-export function updateTodosList() {
+export function updateTodosList(projectName) {
   const list = document.querySelector('.todos ul');
   list.innerHTML = '';
 
-  const projectName = document.querySelector('h1').innerHTML;
   const todos = getTodos(projectName);
   todos.forEach((todo) => {
     const li = document.createElement('li');
